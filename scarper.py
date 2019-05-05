@@ -192,23 +192,34 @@ def ikea_get_article(url) :
     
     results = []
     liens = ikea_lien()
-    lien = ikea_get_key_uri(url)
 
     if url in liens :
         links = connexion(url,"div","class","product-compact__spacer")
-    elif lien in liens:
-        links = connexion(lien,"div","class","product-compact__spacer")
+    elif kea_get_key_uri(url) in liens:
+        links = connexion(kea_get_key_uri(url),"div","class","product-compact__spacer")
     else :
         raise Exception("L'url recherche n'existe pas")
 
     for link in links:
         obj = {}
-        obj["image"] = link.find('img')['src']
-        obj["nom"] = link.find('span',attrs={'class':"product-compact__name"}).text.strip()
-        obj["type"] = link.find('span',attrs={'class':"product-compact__type"}).text.strip()
-        obj["description"] = link.find('span',attrs={'class':"product-compact__description"}).text.strip()
-        obj["prix"] = link.find('span',attrs={'class':"product-compact__price"}).text.strip()
-        obj["avis"] = link.find('span',attrs={'class':"product-compact__ratings"}).text.strip()
+        
+        if link.find('img') : 
+            obj["image"] = link.find('img')['src']
+        
+        if link.find('span',attrs={'class':"product-compact__name"}) :     
+            obj["nom"] = link.find('span',attrs={'class':"product-compact__name"}).text.strip()
+        
+        if link.find('span',attrs={'class':"product-compact__type"}) :             
+            obj["type"] = link.find('span',attrs={'class':"product-compact__type"}).text.strip()
+        
+        if link.find('span',attrs={'class':"product-compact__description"}) :                     
+            obj["description"] = link.find('span',attrs={'class':"product-compact__description"}).text.strip()
+        
+        if link.find('span',attrs={'class':"product-compact__price"}) :                             
+            obj["prix"] = link.find('span',attrs={'class':"product-compact__price"}).text.strip()
+
+        if link.find('span',attrs={'class':"product-compact__ratings"}) :                                 
+            obj["avis"] = link.find('span',attrs={'class':"product-compact__ratings"}).text.strip()
         
         results.append(obj)
 
@@ -225,7 +236,7 @@ def ikea_get_key_uri(key) :
 
 if __name__ == "__main__": 
     
-    links = ikea_get_article('Arrosoirs')
+    links = ikea_get_article('https://www.ikea.com/fr/fr/cat/meubles-pour-lavabo-20719/')
     for link in links :
         print(link)
     
