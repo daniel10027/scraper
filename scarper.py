@@ -188,6 +188,31 @@ def ikea_categorie() :
             link.append(it['nom'])
     return link
 
+def ikea_get_article(url) :
+    
+    results = []
+    liens = ikea_lien()
+    lien = ikea_get_key_uri(url)
+
+    if url in liens :
+        links = connexion(url,"div","class","product-compact__spacer")
+    elif lien in liens:
+        links = connexion(lien,"div","class","product-compact__spacer")
+    else :
+        raise Exception("L'url recherche n'existe pas")
+
+    for link in links:
+        obj = {}
+        obj["image"] = link.find('img')['src']
+        obj["nom"] = link.find('span',attrs={'class':"product-compact__name"}).text.strip()
+        obj["type"] = link.find('span',attrs={'class':"product-compact__type"}).text.strip()
+        obj["description"] = link.find('span',attrs={'class':"product-compact__description"}).text.strip()
+        obj["prix"] = link.find('span',attrs={'class':"product-compact__price"}).text.strip()
+        obj["avis"] = link.find('span',attrs={'class':"product-compact__ratings"}).text.strip()
+        
+        results.append(obj)
+
+    return results
 
 def ikea_get_key_uri(key) :
     if key in ikea_categorie() :
@@ -200,12 +225,7 @@ def ikea_get_key_uri(key) :
 
 if __name__ == "__main__": 
     
-    links = connexion('http://cursus.nan.ci')
-    # print(links)
-    for link in links:
+    links = ikea_get_article('Arrosoirs')
+    for link in links :
         print(link)
-        print()
-   
-   
-
-        
+    
