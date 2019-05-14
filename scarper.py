@@ -323,7 +323,7 @@ def ali_baba_search_article(categorie,page=1) :
 
 def ali_express_article(url) :
     els = []
-    return connexion(url,"div","class","item")
+    articles = connexion(url,"div","class","item")
     if articles == []:
         articles = connexion(url,"li","class","list-item")
         print(articles)  
