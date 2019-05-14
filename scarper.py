@@ -436,7 +436,7 @@ def zalando(typ,categorie,page=1):
     else:
         url = 'https://www.zalando.fr/{typ}/?q={categorie}'.format(typ=typ,categorie=categorie)
     
-    articles = connexion('https://www.zalando.fr/homme/?q=chaussures&p=3',"z-grid-item","class","cat_articleCard-1r8nF")
+    articles = connexion(url,"z-grid-item","class","cat_articleCard-1r8nF")
     
     for item in articles :
         res = {
