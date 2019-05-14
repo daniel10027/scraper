@@ -324,9 +324,10 @@ def ali_baba_search_article(categorie,page=1) :
 def ali_express_article(url) :
     els = []
     articles = connexion(url,"div","class","item")
+    
     if articles == []:
         articles = connexion(url,"li","class","list-item")
-        print(articles)  
+    
     for item in articles  :
         result = {}
         result["image"] = item.find("img")['src']
@@ -424,7 +425,7 @@ def ali_express_get_url(key):
 def url_paginate_ali_express(url, page = 1):
     if page > 1:
         idx = url.index('.html')
-        newUri = "{un}/{page}{deux}".format(un=url[:idx],page=page,deux="/?site=fra&tag=")
+        newUri = "{un}/{page}{deux}".format(un=url[:idx],page=page,deux=".html?site=fra&tag=")
         return newUri
     return url
 
@@ -450,9 +451,7 @@ def zalando(typ,categorie,page=1):
 
 if __name__ == "__main__": 
     
-    # links = ali_express_paginate('Tendance')
-    # print(links)
-    print(zalando("homme",'chaussures',3))
+    # print(zalando("enfant",'jouet fille'))
     # print(connexion("https://www.alibaba.com/trade/search?fsb=y&IndexArea=product_en&CatId=&SearchText=table&page=1","b"))
     # for link in new :
     #     print(link)
