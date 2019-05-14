@@ -424,7 +424,7 @@ def ali_express_get_url(key):
 def url_paginate_ali_express(url, page = 1):
     if page > 1:
         idx = url.index('.html')
-        newUri = "{un}/{page}{deux}".format(un=url[:idx],page=page,deux="?site=fra&tag=")
+        newUri = "{un}/{page}{deux}".format(un=url[:idx],page=page,deux="/?site=fra&tag=")
         return newUri
     return url
 
@@ -440,8 +440,8 @@ def zalando(typ,categorie,page=1):
     
     for item in articles :
         res = {
-            'images': item.find('img',attrs={'class':'cat_image-1byrW cat_packshotImage-1PSiI'})['srcset'],
-            'nom': item.find('img',attrs={'class':'cat_image-1byrW cat_packshotImage-1PSiI'})['alt'],
+            'images': item.find('img',attrs={'class':'cat_image-1byrW'})['src'],
+            'nom': item.find('img',attrs={'class':'cat_image-1byrW'})['alt'],
             'prix': item.find('div',attrs={'class':'cat_originalPrice-2Oy4G'}).find('span').text
         }
         ret.append(res)
