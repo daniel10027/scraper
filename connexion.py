@@ -30,6 +30,7 @@ def build_chrome_options(anonymous = False, brow = False):
     generateur de proxy
 """
 def get_proxies(link):
+    
     soup = connexion(link,lxml=True)
     https_proxies = filter(lambda item: "yes" in item.text, soup.select("table.table tr"))
     
@@ -113,7 +114,7 @@ def wait(driver,selector) :
 def click(driver = '', selected  = '',selectedWait = ''):
     if driver is not '' and selected  is not '':
         if driver.find_element_by_css_selector(selected):      
-            button = driver.find_element_by_css_selector(selected) :
+            button = driver.find_element_by_css_selector(selected)
             button.click()
             if selectedWait is not '':
                 wait(driver,selectedWait)
@@ -137,8 +138,9 @@ def click(driver = '', selected  = '',selectedWait = ''):
     il est lies aux fonctions click, wait, get_page_number
 """
 def connexion(url, selected = None, attr = None, attrsValue = None,selenium=False,anonymous = False,brow=False,lxml=False): 
+    
     if selenium == False:
-        if anonymous == False:
+        if anonymous == True:
             response = get_response(url)
             soup = BeautifulSoup(response.text, 'lxml')
         else:
