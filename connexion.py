@@ -10,6 +10,12 @@ from fake_useragent import UserAgent
 from random import shuffle
 
 """
+    chemin pour modifier l'emplacement du driver chrome
+"""
+path = "/Users/armelreal/Downloads/chromedriver"
+
+
+"""
     anonymous connexion anonyme
     brow affichage du navigateur
     configuration de notre navigateur
@@ -137,11 +143,11 @@ def click(driver = '', selected  = '',selectedWait = ''):
     Pour le moment je n'ai pas encore integrer l'interaction avec ajax et navigateur
     il est lies aux fonctions click, wait, get_page_number
 """
-def connexion(url, selected = None, attr = None, attrsValue = None,selenium=False,anonymous = False,brow=False,lxml=False): 
+def connexion(url, selected = None, attr = None, attrsValue = None,selenium=False,anonymous = False,brow=False,lxml=False,page_number='',cl='',at='',atv='',position=-1,clickable='',wait=''): 
     
     if selenium == False:
         if anonymous == True:
-            response = get_response(url, allow_redirects=True)
+            response = get_response(url)
             soup = BeautifulSoup(response.text, 'lxml')
         else:
             page = requests.get(url, allow_redirects=True)
@@ -151,15 +157,24 @@ def connexion(url, selected = None, attr = None, attrsValue = None,selenium=Fals
                 soup = BeautifulSoup(page.content, 'html.parser')
     else:
         if brow is True and anonymous == False:
-            driver = webdriver.Chrome("/Users/armelreal/Downloads/chromedriver")
+            driver = webdriver.Chrome(path)
         elif brow is True and anonymous == True:
-            driver = webdriver.Chrome("/Users/armelreal/Downloads/chromedriver",chrome_options=build_chrome_options(True,False))            
+            driver = webdriver.Chrome(path,chrome_options=build_chrome_options(True,False))            
         elif anonymous == True:
-            driver = webdriver.Chrome("/Users/armelreal/Downloads/chromedriver",chrome_options=build_chrome_options(True))
+            driver = webdriver.Chrome(path,chrome_options=build_chrome_options(True))
         else:
-            driver = webdriver.Chrome("/Users/armelreal/Downloads/chromedriver",chrome_options=build_chrome_options())
+            driver = webdriver.Chrome(path,chrome_options=build_chrome_options())
         
+        if page_number is not '' and cl is not '' and at is not '' and atv is not '' :
+            nbr = int(get_page_number(url,page_number,cl,at,atv,position))
+            i = 0
+            while nbr > i :
+                if clickable is not '':
+                    click(driver,clickable,wait)
+                i +=1
+
         links = driver.get(url)
+        
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         driver.close()
 
