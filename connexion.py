@@ -141,7 +141,7 @@ def connexion(url, selected = None, attr = None, attrsValue = None,selenium=Fals
     
     if selenium == False:
         if anonymous == True:
-            response = get_response(url)
+            response = get_response(url, allow_redirects=True)
             soup = BeautifulSoup(response.text, 'lxml')
         else:
             page = requests.get(url, allow_redirects=True)
