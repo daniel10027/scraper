@@ -1,8 +1,22 @@
 #!/usr/bin/python
 
-import connexion
+import requests
 import scarper
 from bs4 import BeautifulSoup
+
+def connexion(url, selected = None, attr = None, attrsValue = None,selenium=False):
+    page = requests.get(url, allow_redirects=True)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    
+    if selected != None and attr is None and attrsValue is None :
+        return soup.select(selected)
+
+    elif selected != None and attr != None and attrsValue != None :
+        return soup.findAll(selected,attrs={attr:attrsValue})
+    elif selected == None and attr == None and attrsValue == None :
+        return soup
+    else:
+        raise Exception('Veuillez entrer convenablement les parametres de la fonction')
 
 """
     Cette fonction permet de recuperer tous les articles d'une page zalendo
@@ -16,7 +30,7 @@ def zalando(typ,categorie,page=1):
     ret = []
     url  = zalando_paginate(typ,categorie,page)
 
-    articles = connexion.connexion(url,"z-grid-item","class","cat_articleCard-1r8nF")
+    articles = connexion(url,"z-grid-item","class","cat_articleCard-1r8nF")
     
     for item in articles :
         res = {}
