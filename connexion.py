@@ -12,7 +12,7 @@ from random import shuffle
 """
     chemin pour modifier l'emplacement du driver chrome
 """
-path = "/Users/armelreal/Downloads/chromedriver"
+path = "chromedriver"
 
 
 """
