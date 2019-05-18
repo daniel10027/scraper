@@ -16,7 +16,7 @@ def zalando(typ,categorie,page=1):
     ret = []
     url  = zalando_paginate(typ,categorie,page)
 
-    articles = connexion.connexion(url,"z-grid-item","class","cat_articleCard-1r8nF",True)
+    articles = connexion.connexion(url,"z-grid-item","class","cat_articleCard-1r8nF")
     
     for item in articles :
         res = {}
@@ -48,16 +48,16 @@ def zalando_paginate(typ,categorie,page=1):
 """
     Pour tester le fonctionnement de chaque fonction decomment bloc par bloc 
 """
-# if __name__ == "__main__": 
+if __name__ == "__main__": 
     
-    # links = zalando_paginate('homme','chaussures')
-    # print(links)
+    links = zalando_paginate('homme','chaussures')
+    print(links)
     
     # links1 = zalando_paginate('homme','chaussures',3)
     # print(links1)
     
-    # new = zalando("homme",'montre')
-    # scarper.affichage(new)
+    new = zalando("homme",'montre')
+    scarper.affichage(new)
 
     # new1 = zalando("homme",'montre',3)
     # scarper.affichage(new1)
