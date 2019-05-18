@@ -16,7 +16,7 @@ def zalando(typ,categorie,page=1):
     ret = []
     url  = zalando_paginate(typ,categorie,page)
 
-    articles = connexion.connexion(url,"z-grid-item","class","cat_articleCard-1r8nF",anonymous=True)
+    articles = connexion.connexion(url,"z-grid-item","class","cat_articleCard-1r8nF",True)
     
     for item in articles :
         res = {}
